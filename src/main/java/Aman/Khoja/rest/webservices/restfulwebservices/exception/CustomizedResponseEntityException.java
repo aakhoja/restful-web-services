@@ -1,6 +1,7 @@
 package Aman.Khoja.rest.webservices.restfulwebservices.exception;
 
 
+import Aman.Khoja.rest.webservices.restfulwebservices.user.UserNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -20,5 +21,13 @@ public class CustomizedResponseEntityException extends ResponseEntityExceptionHa
         ErrorDetails errorDetails =  new ErrorDetails(LocalDateTime.now(),ex.getMessage(),webRequest.getDescription(false));
 
         return new ResponseEntity<>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(UserNotFoundException.class)
+    public final ResponseEntity<Object> handleUserNotFoundException(Exception ex, WebRequest webRequest){
+
+        ErrorDetails errorDetails =  new ErrorDetails(LocalDateTime.now(),ex.getMessage(),webRequest.getDescription(false));
+
+        return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
     }
 }
