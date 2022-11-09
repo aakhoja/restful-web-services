@@ -1,7 +1,9 @@
 package Aman.Khoja.rest.webservices.restfulwebservices.user;
 
-import javax.validation.constraints.Past;
-import javax.validation.constraints.Size;
+
+import jakarta.validation.constraints.Past;
+import jakarta.validation.constraints.Size;
+
 import java.time.LocalDate;
 
 public class User {
@@ -9,8 +11,10 @@ public class User {
 
     private Integer id;
 
+
     @Size(min = 2,message = "Name should have at-least 2 characters.")
     private String name;
+
 
     @Past(message = "The birth year cannot be in the future")
     private LocalDate birthday;
