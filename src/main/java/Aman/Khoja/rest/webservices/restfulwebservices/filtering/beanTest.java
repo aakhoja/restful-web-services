@@ -1,12 +1,14 @@
 package Aman.Khoja.rest.webservices.restfulwebservices.filtering;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+@JsonFilter("beanTest Filter")
 public class beanTest {
 
     private String value1;
 
-    @JsonIgnore
+    //@JsonIgnore
     private String value2;
     private String value3;
 
