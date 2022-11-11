@@ -1,7 +1,10 @@
 package Aman.Khoja.rest.webservices.restfulwebservices.user;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -25,12 +28,18 @@ public class UserResource {
     }
 
     @GetMapping(path = "/users/{id}")
-    public User retriveUser(@PathVariable int id){
+    public EntityModel<User> retriveUser(@PathVariable int id){
         User savedUser = service.findOne(id);
 
         if(savedUser == null)
             throw new UserNotFoundException("id: " + id);
-        return savedUser;
+
+        EntityModel<User> entityModel = EntityModel.of(savedUser);
+
+        WebMvcLinkBuilder link = linkTo(methodOn(this.getClass()).retrieveAllUsers());
+        entityModel.add(link.withRel("all-users"));
+
+        return entityModel;
     }
 
     @PostMapping(path = "/users")
